@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
         import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
         import org.eclipse.paho.client.mqttv3.MqttException;
@@ -6,10 +10,20 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 
         public class MqttPublishSample {
 
-        public static void main(String[] args) {
+        public static void main(String[] args) throws FileNotFoundException {
 
             String topic        = "MQTT Examples";
+            //String topic        = "MQTT vs Coap";
+            
             String content      = "Message from MqttPublishSample";
+            
+            Scanner sc = new Scanner(new File("D:\\GitHub\\PubSubOnCoAP\\xmldata\\ss.xml"));
+            String test = "";
+            while(sc.hasNextLine())
+            {
+            	test += sc.nextLine();
+            }
+            
             int qos             = 2;
             //String broker = "tcp://iot.eclipse.org:1883";
             String broker = "tcp://localhost:1883";
@@ -24,7 +38,9 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
                 System.out.println("Connecting to broker: "+broker);
                 sampleClient.connect(connOpts);
                 System.out.println("Connected");
+                //System.out.println("Publishing message: "+content);
                 System.out.println("Publishing message: "+content);
+                //MqttMessage message = new MqttMessage(content.getBytes());
                 MqttMessage message = new MqttMessage(content.getBytes());
                 message.setQos(qos);
                 sampleClient.publish(topic, message);
