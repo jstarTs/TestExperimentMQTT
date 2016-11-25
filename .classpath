@@ -7,5 +7,18 @@
 	<classpathentry kind="lib" path="JAR/moquette-netty-parser-0.9-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="JAR/org.eclipse.paho.client.mqttv3-1.1.0.jar" sourcepath="JAR/org.eclipse.paho.client.mqttv3-1.1.0-sources.jar"/>
 	<classpathentry kind="lib" path="JAR/org.eclipse.paho.ui.core-1.1.0.jar" sourcepath="JAR/org.eclipse.paho.ui.core-1.1.0-sources.jar"/>
+	<classpathentry kind="lib" path="JAR/junit/junit/3.8.1/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="JAR/SaxonHE9-7-0-6J/saxon9-test.jar"/>
+	<classpathentry kind="lib" path="JAR/SaxonHE9-7-0-6J/saxon9-xqj.jar"/>
+	<classpathentry kind="lib" path="JAR/SaxonHE9-7-0-6J/saxon9he.jar"/>
+	<classpathentry kind="lib" path="JAR/jlibs/jlibs-xmldog/2.2.1/jlibs-xmldog-2.2.1.jar"/>
+	<classpathentry kind="lib" path="JAR/jlibs/jlibs-xml/2.2.1/jlibs-xml-2.2.1.jar"/>
+	<classpathentry kind="lib" path="JAR/jlibs/jlibs-visitor/2.2.1/jlibs-visitor-2.2.1.jar"/>
+	<classpathentry kind="lib" path="JAR/jlibs/jlibs-core/2.2.1/jlibs-core-2.2.1.jar"/>
+	<classpathentry kind="lib" path="JAR/jaxen/jaxen/1.1.1/jaxen-1.1.1.jar"/>
+	<classpathentry kind="lib" path="JAR/gnu-crypto-2.0.1-bin-r1/gnu-crypto-2.0.1-bin/lib/gnu-crypto.jar"/>
+	<classpathentry kind="lib" path="JAR/gnu-crypto-2.0.1-bin-r1/gnu-crypto-2.0.1-bin/lib/javax-crypto.jar"/>
+	<classpathentry kind="lib" path="JAR/gnu-crypto-2.0.1-bin-r1/gnu-crypto-2.0.1-bin/lib/javax-security.jar"/>
+	<classpathentry kind="lib" path="JAR/commons-lang3-3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
