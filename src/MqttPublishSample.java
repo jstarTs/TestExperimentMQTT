@@ -41,7 +41,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
                 //System.out.println("Publishing message: "+content);
                 System.out.println("Publishing message: "+content);
                 //MqttMessage message = new MqttMessage(content.getBytes());
-                MqttMessage message = new MqttMessage(content.getBytes());
+                MqttMessage message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+content).getBytes());
                 message.setQos(qos);
                 sampleClient.publish(topic, message);
                 System.out.println("Message published");
