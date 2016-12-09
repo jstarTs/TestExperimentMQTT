@@ -8,7 +8,8 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
         import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
         import org.eclipse.paho.client.mqttv3.MqttException;
         import org.eclipse.paho.client.mqttv3.MqttMessage;
-        import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.eclipse.paho.client.mqttv3.MqttSecurityException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
         public class MqttPublishSample {
 
@@ -60,7 +61,9 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
                 System.out.println("Publishing message: "+content);
                 //MqttMessage message = new MqttMessage(content.getBytes());
                 MqttMessage message;
-                for(int i=0 ; i<10 ; i++)
+                
+                /*
+                for(int i=0 ; i<30 ; i++)
                 {
                 	sampleClient.connect(connOpts); 
                 	message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
@@ -70,10 +73,43 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
                      
                      sampleClient.disconnect();
                 }
+                */
                 
+                sampleClient.connect(connOpts); 
+            	message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
+                 message.setQos(qos);
+                 sampleClient.publish(topic, message);
+                 System.out.println("Message published");
+                 sampleClient.disconnect();
+                 
+                //message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
+                for(int i=0 ; i<29 ; i++)
+                {
+                	int index = i;
+                	new Thread (()->{
+                		try 
+                		{
+							sampleClient.connect(connOpts);
+							
+	                        message.setQos(qos);
+	                        sampleClient.publish(topic, message);
+	                        System.out.println("Message published");
+	                        System.out.println(index);
+	                         
+	                         sampleClient.disconnect();
+						} catch (MqttSecurityException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (MqttException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+                	}).start();
+                	
+                }
                
                 System.out.println("Disconnected");
-                System.exit(0);
+                //System.exit(0);
                 
             } catch(MqttException me) {
                 System.out.println("reason "+me.getReasonCode());
@@ -84,4 +120,6 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
                 me.printStackTrace();
             }
         }
+        
+        
     }
