@@ -80,7 +80,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                  message.setQos(qos);
                  sampleClient.publish(topic, message);
                  System.out.println("Message published");
-                 sampleClient.disconnect();
+                 //sampleClient.disconnect();
                  
                 //message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
                 for(int i=0 ; i<29 ; i++)
