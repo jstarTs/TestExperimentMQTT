@@ -43,15 +43,17 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 				temp = "";
 			}
             
-            int qos             = 2;
+            int qos             = 0;
             //String broker = "tcp://iot.eclipse.org:1883";
             //String broker = "tcp://localhost:1883";
-            String broker = "tcp://140.120.15.136:1883";
+            String broker = "tcp://140.120.15.159:1883";
             String clientId     = "JavaSample";
             MemoryPersistence persistence = new MemoryPersistence();
 
+            /*
             try {
-                MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+                
+            	MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
                 MqttConnectOptions connOpts = new MqttConnectOptions();
                 connOpts.setCleanSession(true);
                 System.out.println("Connecting to broker: "+broker);
@@ -61,37 +63,57 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                 System.out.println("Publishing message: "+content);
                 //MqttMessage message = new MqttMessage(content.getBytes());
                 MqttMessage message;
+                */
                 
-                /*
-                for(int i=0 ; i<30 ; i++)
+            	/*
+                for(int i=0 ; i<10 ; i++)
                 {
                 	sampleClient.connect(connOpts); 
-                	message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
-                     message.setQos(qos);
+                	//message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
+                	message = new MqttMessage(fileList.get(3).getBytes());
+                  
+                	message.setQos(qos);
                      sampleClient.publish(topic, message);
                      System.out.println("Message published");
                      
                      sampleClient.disconnect();
                 }
                 */
-                
-                sampleClient.connect(connOpts); 
-            	message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
-                 message.setQos(qos);
-                 sampleClient.publish(topic, message);
-                 System.out.println("Message published");
+            //} 
+            /*
+            catch(MqttException me) {
+                System.out.println("reason "+me.getReasonCode());
+                System.out.println("msg "+me.getMessage());
+                System.out.println("loc "+me.getLocalizedMessage());
+                System.out.println("cause "+me.getCause());
+                System.out.println("excep "+me);
+                me.printStackTrace();
+            }
+            */
+            
+            
+//                sampleClient.connect(connOpts); 
+//            	MqttMessage message;
+//                message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
+//                 message.setQos(qos);
+//                 sampleClient.publish(topic, message);
+//                 System.out.println("Message published");
                  //sampleClient.disconnect();
                  
                 //message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
-                for(int i=0 ; i<29 ; i++)
+            	
+                for(int i=0 ; i<100 ; i++)
                 {
                 	int index = i;
                 	new Thread (()->{
                 		try 
                 		{
+							MqttClient sampleClient = new MqttClient(broker, clientId+index, persistence);
+                			MqttConnectOptions connOpts = new MqttConnectOptions();
 							sampleClient.connect(connOpts);
-							
-	                        message.setQos(qos);
+							connOpts.setCleanSession(true);
+							MqttMessage message = new MqttMessage(fileList.get(3).getBytes());;
+							message.setQos(qos);
 	                        sampleClient.publish(topic, message);
 	                        System.out.println("Message published");
 	                        System.out.println(index);
@@ -107,18 +129,12 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                 	}).start();
                 	
                 }
-               
+               	
+                 
                 System.out.println("Disconnected");
                 //System.exit(0);
                 
-            } catch(MqttException me) {
-                System.out.println("reason "+me.getReasonCode());
-                System.out.println("msg "+me.getMessage());
-                System.out.println("loc "+me.getLocalizedMessage());
-                System.out.println("cause "+me.getCause());
-                System.out.println("excep "+me);
-                me.printStackTrace();
-            }
+           
         }
         
         

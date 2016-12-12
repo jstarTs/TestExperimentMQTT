@@ -98,6 +98,10 @@ public class ProtocolProcessor {
 	}
 
 	FilterManagement fm; // 非原本
+	long Accesstime ;
+	List<byte[]> listPayLoad = new ArrayList<byte[]>();
+	int SensorNum;
+	
 	
     static final class WillMessage {
         private final String topic;
@@ -450,6 +454,9 @@ public class ProtocolProcessor {
         
     	//System.out.println("000");//有觸發到方法
     	
+    	Accesstime = System.currentTimeMillis();
+    	SaveList(msg);
+    	
     	LOG.trace("PUB --PUBLISH--> SRV executePublish invoked with {}", msg);
         String clientID = NettyUtils.clientID(channel);
         final String topic = msg.getTopicName();
@@ -485,15 +492,17 @@ public class ProtocolProcessor {
             //NB publish to subscribers for QoS 2 happen upon PUBREL from publisher
         }
         
-        try {
-			SaveDB(msg);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        
+        
+//        try {
+//			SaveDB(msg);
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
         
         if (msg.isRetainFlag()) {
             if (qos == AbstractMessage.QOSType.MOST_ONE) {
@@ -526,6 +535,41 @@ public class ProtocolProcessor {
 		fm = management;
 	}
 	
+	public void setSensorNum(int num)
+	{
+		SensorNum = num;
+	}
+	
+	public void SaveList(PublishMessage msg)
+	{
+		byte[] payload =  msg.getPayload().array();
+		listPayLoad.add(payload);
+		
+		if(listPayLoad.size() == 1)
+			System.out.println(Accesstime);
+		
+		if(listPayLoad.size() == SensorNum)
+		{
+			//System.out.println(listPayLoad.size());
+			try 
+			{
+				useFilterTest(listPayLoad);
+			} 
+			catch (InterruptedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			catch (ExecutionException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			listPayLoad.clear();
+		}
+	}
+	
 	public void SaveDB(PublishMessage msg) throws ClassNotFoundException, SQLException
 	{
 		Connection conn = FogDB.getConnection();
@@ -553,7 +597,7 @@ public class ProtocolProcessor {
 	
 	//Pallier
 		BigInteger[] AnswerValueArray;
-		List<String> topicHashList = new ArrayList<String>();
+		List<String> topicHashList = new ArrayList<String>(); //代表有訂閱的主題數，不管本資料中有沒符合的主題
 		
 		public void useFilterTest(List<byte[]> list) throws InterruptedException, ExecutionException
 	    {
@@ -562,7 +606,11 @@ public class ProtocolProcessor {
 			//int runtime = Integer.parseInt(args[2]);
 			//int totalDocNum = meterNum*runtime;
 			
+			//System.out.println(list.size());
+			
 			int typeNum = topicHashList.size();//指的是幾個term
+			typeNum=2;
+			//System.out.println(typeNum+".....");
 			
 			meterStream[] ms = new meterStream[meterNum]; 			
 			
@@ -609,7 +657,7 @@ public class ProtocolProcessor {
 			
 			List<Future<List<String>>> resultList = null;
 			
-			long starttime = System.currentTimeMillis();
+			//long starttime = System.currentTimeMillis();
 			
 			for(int i = 0 ; i < list.size() ; i++ )
 			{
@@ -659,7 +707,8 @@ public class ProtocolProcessor {
 			reducerService.awaitTermination(30, TimeUnit.MINUTES);
 					
 			long endTime = System.currentTimeMillis();
-			System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + (endTime - starttime)));
+			//System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + (endTime - starttime)));
+			System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + endTime));
 			
 			System.gc();
 	    }

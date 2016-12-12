@@ -49,18 +49,18 @@ public class NettyMQTTHandler extends ChannelInboundHandlerAdapter {
         try {
             switch (msg.getMessageType()) {
                 case CONNECT:
-                	System.out.println("000 CONNECT");//觸發方法測試
+                	//System.out.println("000 CONNECT");//觸發方法測試
                     m_processor.processConnect(ctx.channel(), (ConnectMessage) msg);
                     break;
                 case SUBSCRIBE:
-                	System.out.println("111 SUBSCRIBE");//觸發方法測試
+                	//System.out.println("111 SUBSCRIBE");//觸發方法測試
                     m_processor.processSubscribe(ctx.channel(), (SubscribeMessage) msg);
                     break;
                 case UNSUBSCRIBE:
                     m_processor.processUnsubscribe(ctx.channel(), (UnsubscribeMessage) msg);
                     break;
                 case PUBLISH:
-                	System.out.println("222 PUBLISH");//觸發方法測試
+                	//System.out.println("222 PUBLISH");//觸發方法測試
                     m_processor.processPublish(ctx.channel(), (PublishMessage) msg);
                     break;
                 case PUBREC:

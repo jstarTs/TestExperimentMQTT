@@ -25,7 +25,7 @@
 	<classpathentry kind="lib" path="JAR/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="JAR/netty-transport/4.0.33.Final/netty-transport-4.0.33.Final.jar"/>
 	<classpathentry kind="lib" path="JAR/netty-handler/4.0.33.Final/netty-handler-4.0.33.Final.jar"/>
-	<classpathentry kind="lib" path="JAR/netty-common/4.0.33.Final/netty-common-4.0.33.Final.jar"/>
+	<classpathentry kind="lib" path="JAR/netty-common/4.0.33.Final/netty-common-4.0.33.Final.jar" sourcepath="C:/Users/poshin/.m2/repository/io/netty/netty-common/4.0.33.Final/netty-common-4.0.33.Final-sources.jar"/>
 	<classpathentry kind="lib" path="JAR/netty-codec-http/4.0.33.Final/netty-codec-http-4.0.33.Final.jar"/>
 	<classpathentry kind="lib" path="JAR/netty-codec/4.0.33.Final/netty-codec-4.0.33.Final.jar"/>
 	<classpathentry kind="lib" path="JAR/netty-buffer/4.0.33.Final/netty-buffer-4.0.33.Final.jar"/>

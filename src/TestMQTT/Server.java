@@ -97,7 +97,9 @@ public class Server extends io.moquette.server.Server{
         m_acceptor.initialize(processor, config, sslCtxCreator);
         m_processor = processor;
         m_initialized = true;
+        m_processor.setSensorNum(MeterNum);
         
+        /*
         FilterManagement fm = new FilterManagement();
         m_processor.setFilterManager(fm);
         fm.setSensorNum(MeterNum);
@@ -110,6 +112,7 @@ public class Server extends io.moquette.server.Server{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
     }
     
     private void configureCluster(IConfig config) throws FileNotFoundException {
