@@ -98,7 +98,7 @@ public class ProtocolProcessor {
 	}
 
 	FilterManagement fm; // 非原本
-	long Accesstime ;
+	long Accesstime , starttime;
 	List<byte[]> listPayLoad = new ArrayList<byte[]>();
 	int SensorNum;
 	
@@ -540,13 +540,17 @@ public class ProtocolProcessor {
 		SensorNum = num;
 	}
 	
-	public void SaveList(PublishMessage msg)
+	public synchronized void SaveList(PublishMessage msg)
 	{
 		byte[] payload =  msg.getPayload().array();
-		listPayLoad.add(payload);
 		
+		listPayLoad.add(payload);
 		if(listPayLoad.size() == 1)
-			System.out.println(Accesstime);
+		{
+			//System.out.println(Accesstime);
+			starttime = Accesstime;
+		}
+			
 		
 		if(listPayLoad.size() == SensorNum)
 		{
@@ -707,8 +711,8 @@ public class ProtocolProcessor {
 			reducerService.awaitTermination(30, TimeUnit.MINUTES);
 					
 			long endTime = System.currentTimeMillis();
-			//System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + (endTime - starttime)));
-			System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + endTime));
+			System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + (endTime - starttime)));
+			//System.out.println(("MeterNum: "+meterNum+" , ThreadNum: "+threadNum+" , "+"duration:" + endTime));
 			
 			System.gc();
 	    }

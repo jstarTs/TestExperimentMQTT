@@ -51,7 +51,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
             String clientId     = "JavaSample";
             MemoryPersistence persistence = new MemoryPersistence();
 
-            
+            /*
             try {
                 
 //            	MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
@@ -93,7 +93,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                 System.out.println("excep "+me);
                 me.printStackTrace();
             }
-            
+            */
             
             
 //                sampleClient.connect(connOpts); 
@@ -106,8 +106,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                  
                 //message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
             	
-            /*
-                for(int i=0 ; i<30 ; i++)
+            
+                for(int i=0 ; i<100 ; i++)
                 {
                 	int index = i;
                 	new Thread (()->{
@@ -134,7 +134,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                 	}).start();
                 	
                 }
-               	*/
+               	
                  
                 System.out.println("Disconnected");
                 //System.exit(0);
