@@ -605,7 +605,7 @@ public class ProtocolProcessor {
 		
 		public void useFilterTest(List<byte[]> list) throws InterruptedException, ExecutionException
 	    {
-	    	int threadNum = 10;
+	    	int threadNum = 15;
 			int meterNum = list.size();
 			//int runtime = Integer.parseInt(args[2]);
 			//int totalDocNum = meterNum*runtime;

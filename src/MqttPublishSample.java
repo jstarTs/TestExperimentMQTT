@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
         import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -14,8 +16,10 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
         public class MqttPublishSample {
 
         public static void main(String[] args) throws FileNotFoundException {
-
-            String topic        = "MQTT Examples";
+        	
+        	MqttPublishSample test = new MqttPublishSample();
+            
+        	String topic        = "MQTT Examples";
             //String topic        = "MQTT vs Coap";
             
             String content      = "Message from MqttPublishSample";
@@ -48,6 +52,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
             //String broker = "tcp://localhost:1883";
             String broker = "tcp://140.120.15.159:1883";
             //String broker = "tcp://140.120.15.136:1883";
+            
             String clientId     = "JavaSample";
             MemoryPersistence persistence = new MemoryPersistence();
 
@@ -106,8 +111,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                  
                 //message = new MqttMessage(("hnClcI14k/DCCLPkEfwUnPD/V+FoGLR05+ZoYx6t5Bg"+","+fileList.get(3)).getBytes());
             	
-            
-                for(int i=0 ; i<100 ; i++)
+            /*
+                for(int i=0 ; i<500 ; i++)
                 {
                 	int index = i;
                 	new Thread (()->{
@@ -134,13 +139,61 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                 	}).start();
                 	
                 }
-               	
+               	*/
                  
+            ExecutorService executorService = Executors.newFixedThreadPool(10);
+            
+            for(int i=1 ; i<=1000 ; i++)
+            {
+            	executorService.execute(test.new publish(broker,i , fileList.get(3)));
+            }
+            executorService.shutdown();
+            
                 System.out.println("Disconnected");
                 //System.exit(0);
                 
            
         }
         
+        public class publish implements Runnable
+        {
+        	String broker , document;
+        	int index , qos = 0;
+        	
+        	MemoryPersistence persistence1 = new MemoryPersistence();
+        	
+        	publish(String Broker,int Index , String doc)
+        	{
+        		broker = Broker;
+        		index = Index;
+        		document = doc;
+        	}
+        	
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try 
+        		{
+					MqttClient sampleClient = new MqttClient(broker, "JavaSample"+index, persistence1);
+        			MqttConnectOptions connOpts = new MqttConnectOptions();
+					sampleClient.connect(connOpts);
+					connOpts.setCleanSession(true);
+					MqttMessage message = new MqttMessage(document.getBytes());;
+					message.setQos(qos);
+                    sampleClient.publish("MQTT Examples", message);
+                    System.out.println("Message published");
+                    System.out.println(index);
+                     
+                     sampleClient.disconnect();
+				} catch (MqttSecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MqttException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			}
+        	
+        }
         
     }
