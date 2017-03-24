@@ -24,8 +24,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
             
             String content      = "Message from MqttPublishSample";
             
-            String[] xmlfile = {"testPubSub1.xml" , "testPubSub2.xml" , "testPubSub3.xml" ,"testPubSubAll.xml"};
-			String temp = "";
+            //String[] xmlfile = {"testPubSub1.xml" , "testPubSub2.xml" , "testPubSub3.xml" ,"testPubSubAll.xml"};
+            String[] xmlfile = {"testPubSub_2K.xml" , "testPubSub_4K.xml" , "testPubSub_6K.xml" ,"testPubSub_8K.xml","testPubSub_10K.xml","testPubSub_12K.xml"};
+            String temp = "";
 			Scanner sc ;
 			List<String> fileList = new ArrayList<String>();
 			
@@ -143,9 +144,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                  
             ExecutorService executorService = Executors.newFixedThreadPool(10);
             
-            for(int i=1 ; i<=1000 ; i++)
+            for(int i=1 ; i<=100 ; i++)
             {
-            	executorService.execute(test.new publish(broker,i , fileList.get(3)));
+            	executorService.execute(test.new publish(broker,i , fileList.get(0)));
             }
             executorService.shutdown();
             
