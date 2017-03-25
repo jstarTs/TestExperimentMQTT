@@ -144,9 +144,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
                  
             ExecutorService executorService = Executors.newFixedThreadPool(10);
             
-            for(int i=1 ; i<=100 ; i++)
+            for(int i=1 ; i<=300 ; i++)
             {
-            	executorService.execute(test.new publish(broker,i , fileList.get(0)));
+            	executorService.execute(test.new publish(broker,i , fileList.get(2)));
             }
             executorService.shutdown();
             
